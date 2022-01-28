@@ -76,12 +76,14 @@ then
 
 	bash ./user_creation.sh player
     bash ./user_creation.sh create
+	bash ./createPlayerFile.sh
 elif [ "$1" = "stop" ]
 then
     sudo systemctl stop ssh
     echo "[✓] serveur ssh éteint"
     print_ssh_server_status
     bash ./user_creation.sh remove
+	bash ./createPlayerFile.sh remove
 else
     echo "Argument manquant:"
     echo "Ex:" $script_name "start"

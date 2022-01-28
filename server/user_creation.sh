@@ -5,6 +5,10 @@ script_name=$0
 # Demande d'entrer le nombre de joueurs
 function get_player_number {
     read -p "Entrer le nombre de joueurs: " nb_player
+    
+    mkdir -p temp
+    touch temp/nb_player.dat
+
     echo $nb_player > temp/nb_player.dat
     echo
 }
