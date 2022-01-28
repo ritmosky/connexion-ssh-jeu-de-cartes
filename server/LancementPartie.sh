@@ -1,3 +1,5 @@
+#!/bin/bash
+
 nbJoueurs=$(cat temp/nb_player.dat)
 cp listeCartes.txt temp/listeTemp.txt
 

@@ -1,4 +1,4 @@
-
+#!/bin/bash
 
 
 #Fonction qui rajoute la carte jouée par joueurActuel dans le fichier etatJeu
@@ -69,8 +69,10 @@ function tourDeJeu {
 
     while [ ! $(cat temp/${JoueurActuel}Out) ] 
     do
-        carte=$(cat temp/${JoueurActuel}Out)
+        echo
     done
+
+    carte=$(cat temp/${JoueurActuel}Out)
 
     cat /dev/null > temp/${JoueurActuel}Out
     sed /$carte/d temp/${JoueurActuel}In > temp/${JoueurActuel}In2.txt
