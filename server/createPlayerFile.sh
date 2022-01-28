@@ -1,10 +1,8 @@
 #!/bin/bash
 
 rm temp/player*
-file=$(cat "temp/jimmyOut")
-echo $file
+nbplayer=$(cat "temp/nb_player.dat")
 
-nbplayer=$1
 
 for i in $(seq 1 $nbplayer)
 do
@@ -14,3 +12,8 @@ do
 done
 
 chmod 666 temp/player*Out
+
+if [ $1 = "remove" ]
+then 
+	rm temp/player*
+fi
