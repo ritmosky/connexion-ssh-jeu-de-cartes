@@ -3,6 +3,7 @@
 script_name=$0
 ssh_status=$(dpkg -s ssh | grep "Status:")
 ssh_server_status=$(dpkg -s openssh-server | grep "Status:")
+mcrypt_status=$(dpkg -s mcrypt | grep "Status:")
 
 function get_ssh_server_status {
 	if [ "$(service --status-all | grep ssh)" = " [ + ]  ssh" ]
@@ -36,7 +37,7 @@ then
 else
 	echo "[X] ssh"
 	echo "[installing] ssh"
-	sudo apt install ssh
+	apt install ssh
 fi
 
 if [ "$ssh_server_status" = "Status: install ok installed" ]
@@ -45,7 +46,16 @@ then
 else
     echo "[X] openssh-server"
     echo "[installing] openssh-server"
-    sudo apt install openssh-server
+    apt install openssh-server
+fi
+
+if [ "$mcrypt_status" = "Status: install ok installed" ]
+then
+	echo "[✓] mcrypt"
+else
+	echo "[X] mcrypt"
+	echo "[installing] mcrypt"
+	apt install mcrypt
 fi
 
 echo
@@ -55,7 +65,7 @@ then
 	sudo systemctl start ssh
 	echo "[✓] serveur ssh démarré"
 	print_ssh_server_status
-	ip=$(ifconfig | grep "inet.*broadcast" | cut -c14-28)
+	ip=$(ifconfig | grep "inet.*broadcast" | cut -d" " -f10)
 	echo "IP du serveur: $ip"
     bash ./user_creation.sh create
 elif [ "$1" = "stop" ]
