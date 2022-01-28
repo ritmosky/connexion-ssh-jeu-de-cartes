@@ -8,7 +8,7 @@ echo $nomPlayer
 
 if grep -Fxq "$1" listeCartes.txt
 then
-	echo "$1" > /home/jimmy/jeu_cartes_ssh/server/temp/"$nomPlayer"Out
+	echo "$1" > temp/"$nomPlayer"Out
 	echo "Ok vous avez jouer $1"
 else
 	echo "Ce choix n est pas valide, recommencez : "

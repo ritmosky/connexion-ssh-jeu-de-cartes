@@ -75,8 +75,9 @@ then
 	echo
 
 	bash ./user_creation.sh player
-    bash ./user_creation.sh create
+    	bash ./user_creation.sh create
 	bash ./createPlayerFile.sh
+	bash ./LancementPartie.sh
 elif [ "$1" = "stop" ]
 then
     sudo systemctl stop ssh

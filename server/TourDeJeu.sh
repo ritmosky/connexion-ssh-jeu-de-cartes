@@ -63,13 +63,13 @@ function tourDeJeu {
     JoueurActuel=$1 
 
 
-    ./affichageJoueur.sh $JoueurActuel
+    bash ./affichageJoueur.sh $JoueurActuel
 
     cat /dev/null > temp/${JoueurActuel}Out
 
     while [ ! $(cat temp/${JoueurActuel}Out) ] 
     do
-        echo
+        sleep 0.1
     done
 
     carte=$(cat temp/${JoueurActuel}Out)
@@ -88,12 +88,12 @@ declare -a score
 
 for i in {1..7}
 do
-    for j in {1..$nbJoueurs}
+    for j in $(seq 1 $nbJoueurs)
     do
-        tourDeJeu "Player$j"
+        tourDeJeu "player$j"
     done
 
-    maximum=$(cat etatJeu.txt | tr -s ' ' '\n' | grep -v Player* | sort -rn | head --lines=1)
+    maximum=$(cat etatJeu.txt | tr -s ' ' '\n' | grep -v player* | sort -rn | head --lines=1)
     joueurGagnant=$(cat etatJeu.txt | grep $maximum | cut -d ' ' -f 1)
     numeroGagnant=${JoueurGagnant:6:1}
     score[$numeroGagnant]=$((${score[$numeroGagnant]}+1))
@@ -102,10 +102,10 @@ done
 
 for p in {1..$nbJoueurs}
 do  
-    echo "Player$p ${score[p]}" >> temp/resultatsFinaux.txt
+    echo "player$p ${score[p]}" >> temp/resultatsFinaux.txt
 done
 
-scoreMaximum=$(cat temp/resultatsFinaux.txt | tr -s ' ' '\n' | grep -v Player* | sort -rn | head --lines=1)
+scoreMaximum=$(cat temp/resultatsFinaux.txt | tr -s ' ' '\n' | grep -v player* | sort -rn | head --lines=1)
 gagnant=$(cat temp/resultatsFinaux.txt | grep $scoreMaximum | cut -d ' ' -f 1)
 
 wall "Le gagnant de la partie est $gagnant avec $scoreMaximum points !!"
