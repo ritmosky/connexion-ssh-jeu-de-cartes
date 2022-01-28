@@ -63,7 +63,7 @@ function tourDeJeu {
     JoueurActuel=$1 
 
 
-    ./AffichageJoueur.sh $JoueurActuel
+    ./affichageJoueur.sh $JoueurActuel
 
     cat /dev/null > temp/${JoueurActuel}Out
 
