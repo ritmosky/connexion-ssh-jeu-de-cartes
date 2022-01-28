@@ -17,8 +17,16 @@ function creation_fichier {
 	then
 		chmod 666 temp/player*Out
 	fi
+	init_fichier_in
 	echo "Fichiers d echanges crees"
 	echo
+}
+
+function init_fichier_in {
+for file in temp/player*In
+do
+	echo C est a ton tour de jouer ! Tape '"./jouerCarte "tacarte" "' pour pouvoir jouer. Voici tes cartes : > $file
+done
 }
 
 if [ "$1" = "remove" ]
