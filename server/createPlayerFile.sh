@@ -25,6 +25,5 @@ if [ "$1" = "remove" ]
 then 
 	rm -f temp/player*
 else
-	echo cc
 	creation_fichier
 fi
