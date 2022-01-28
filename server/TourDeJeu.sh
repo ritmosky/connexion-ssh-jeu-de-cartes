@@ -73,7 +73,9 @@ function tourDeJeu {
     done
 
     cat /dev/null > temp/${JoueurActuel}Out
-    sed '/$carte/d' "temp/${JoueurActuel}In" > "temp/${JoueurActuel}In"
+    sed /$carte/d temp/${JoueurActuel}In > temp/${JoueurActuel}In2.txt
+    cat temp/${JoueurActuel}In2.txt > temp/${JoueurActuel}In.txt
+    rm temp/${JoueurActuel}In2.txt
     carte=$(scoreCarte $carte)
     jouerCarte $joueurActuel $carte
 
@@ -93,7 +95,7 @@ do
     joueurGagnant=$(cat etatJeu.txt | grep $maximum | cut -d ' ' -f 1)
     numeroGagnant=${JoueurGagnant:6:1}
     score[$numeroGagnant]=$((${score[$numeroGagnant]}+1))
-    
+
 done
 
 for p in {1..$nbJoueurs}
@@ -101,7 +103,7 @@ do
     echo "Player$p ${score[p]}" >> temp/resultatsFinaux.txt
 done
 
-scoreMaximum=$(cat resultatsFinaux.txt | tr -s ' ' '\n' | grep -v Player* | sort -rn | head --lines=1)
-gagnant=$(cat resultatsFinaux.txt | grep $scoreMaximum | cut -d ' ' -f 1)
+scoreMaximum=$(cat temp/resultatsFinaux.txt | tr -s ' ' '\n' | grep -v Player* | sort -rn | head --lines=1)
+gagnant=$(cat temp/resultatsFinaux.txt | grep $scoreMaximum | cut -d ' ' -f 1)
 
-echo "Le gagnant de la partie est $gagnant avec $scoreMaximum points !!"
+wall "Le gagnant de la partie est $gagnant avec $scoreMaximum points !!"
