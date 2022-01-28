@@ -45,13 +45,29 @@ function create_users {
     login_user
 }
 
+# Kick les joueurs
+function kick_users {
+    nb_player=$(cat temp/nb_player.dat)
+    for name in $(echo_players)
+    do
+        for pid in $(ps -u $name | cut -d" " -f2)
+        do
+            if [ -n "$pid" ]
+            then
+                sudo kill $pid
+            fi
+        done
+    done
+}
+
 # Supprime les joueurs 
 function delete_users {
     nb_player=$(cat temp/nb_player.dat)
     for i in $(seq 1 $nb_player)
     do
-        echo "[Deleting] player$i"
-        userdel "player$i"
+        name="player$i"
+        echo "[Deleting] $name"
+        userdel $name
     done
     echo_players
     rm -f temp/login_user.dat
@@ -62,6 +78,7 @@ then
     create_users
 elif [ "$1" = "remove" ]
 then
+    kick_users
     delete_users
 elif [ "$1" = "player" ]
 then
