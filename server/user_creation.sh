@@ -19,6 +19,18 @@ function echo_players {
     echo
 }
 
+# Créé login_user.dat
+function login_user {
+    touch temp/login_user.dat
+    > temp/login_user.dat
+    nb_player=$(cat temp/nb_player.dat)
+    for i in $(seq 1 $nb_player)
+    do
+        name="player$i"
+        echo $name >> temp/login_user.dat
+    done
+}
+
 # Créé les joueurs
 function create_users {
     nb_player=$(cat temp/nb_player.dat)
@@ -30,6 +42,7 @@ function create_users {
         useradd --no-create-home $name -p $pass
     done
     echo_players
+    login_user
 }
 
 # Supprime les joueurs 
@@ -41,6 +54,7 @@ function delete_users {
         userdel "player$i"
     done
     echo_players
+    rm -f temp/login_user.dat
 }
 
 if [ "$1" = "create" ]
