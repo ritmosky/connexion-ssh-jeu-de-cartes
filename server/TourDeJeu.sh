@@ -93,4 +93,15 @@ do
     joueurGagnant=$(cat etatJeu.txt | grep $maximum | cut -d ' ' -f 1)
     numeroGagnant=${JoueurGagnant:6:1}
     score[$numeroGagnant]=$((${score[$numeroGagnant]}+1))
+    
 done
+
+for p in {1..$nbJoueurs}
+do  
+    echo "Player$p ${score[p]}" >> temp/resultatsFinaux.txt
+done
+
+scoreMaximum=$(cat resultatsFinaux.txt | tr -s ' ' '\n' | grep -v Player* | sort -rn | head --lines=1)
+gagnant=$(cat resultatsFinaux.txt | grep $scoreMaximum | cut -d ' ' -f 1)
+
+echo "Le gagnant de la partie est $gagnant avec $scoreMaximum points !!"
