@@ -3,9 +3,9 @@
 script_name=$0
 
 function get_player_number {
-    read -p "Entrer le nombre de joueurs: " NB_PLAYER
+    read -p "Entrer le nombre de joueurs: " nb_player
+    echo $nb_player > temp/nb_player.dat
     echo
-    export NB_PLAYER
 }
 
 function echo_players {
@@ -14,7 +14,8 @@ function echo_players {
 }
 
 function create_users {
-    for i in $(seq 1 $NB_PLAYER)
+    nb_player=$(cat temp/nb_player.dat)
+    for i in $(seq 1 $nb_player)
     do
         name="player$i"
         pass=$(perl -e 'print crypt($ARGV[0], "password")' $name)
@@ -25,7 +26,8 @@ function create_users {
 }
     
 function delete_users {
-    for i in $(seq 1 $NB_PLAYER)
+    nb_player=$(cat temp/nb_player.dat)
+    for i in $(seq 1 $nb_player)
     do
         echo "[Deleting] player$i"
         userdel "player$i"
@@ -35,12 +37,13 @@ function delete_users {
 
 if [ "$1" = "create" ]
 then
-    get_player_number
     create_users
 elif [ "$1" = "remove" ]
 then
-    get_player_number
     delete_users
+elif [ "$1" = "player" ]
+then
+    get_player_number
 else
     echo "Argument manquant:"
     echo "Ex:" $script_name "create"

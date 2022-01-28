@@ -67,6 +67,9 @@ then
 	print_ssh_server_status
 	ip=$(ifconfig | grep "inet.*broadcast" | cut -d" " -f10)
 	echo "IP du serveur: $ip"
+	echo
+	
+	bash ./user_creation.sh player
     bash ./user_creation.sh create
 elif [ "$1" = "stop" ]
 then
