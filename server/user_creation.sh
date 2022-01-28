@@ -2,17 +2,20 @@
 
 script_name=$0
 
+# Demande d'entrer le nombre de joueurs
 function get_player_number {
     read -p "Entrer le nombre de joueurs: " nb_player
     echo $nb_player > temp/nb_player.dat
     echo
 }
 
+# Affiche les joueurs
 function echo_players {
     echo $(cut -d: -f1 /etc/passwd | grep player)
     echo
 }
 
+# Créé les joueurs
 function create_users {
     nb_player=$(cat temp/nb_player.dat)
     for i in $(seq 1 $nb_player)
@@ -24,7 +27,8 @@ function create_users {
     done
     echo_players
 }
-    
+
+# Supprime les joueurs 
 function delete_users {
     nb_player=$(cat temp/nb_player.dat)
     for i in $(seq 1 $nb_player)

@@ -5,6 +5,7 @@ ssh_status=$(dpkg -s ssh | grep "Status:")
 ssh_server_status=$(dpkg -s openssh-server | grep "Status:")
 mcrypt_status=$(dpkg -s mcrypt | grep "Status:")
 
+# Retourne 1 si le serveur ssh est allumé, 0 s'il est éteint, -1 en cas d'erreur
 function get_ssh_server_status {
 	if [ "$(service --status-all | grep ssh)" = " [ + ]  ssh" ]
         then
@@ -17,6 +18,7 @@ function get_ssh_server_status {
         fi
 }
 
+# Affiche l'état du serveur (avec du texte parce que c'est plus beau)
 function print_ssh_server_status {
 	if [ $(get_ssh_server_status) -eq 1 ]
 	then
@@ -31,6 +33,7 @@ function print_ssh_server_status {
 	echo
 }
 
+# Vérifie que ssh est installé
 if [ "$ssh_status" = "Status: install ok installed" ]
 then
 	echo "[✓] ssh"
@@ -40,6 +43,7 @@ else
 	apt install ssh
 fi
 
+# Vérifie que openssh-server est installé
 if [ "$ssh_server_status" = "Status: install ok installed" ]
 then
     echo "[✓] openssh-server"
@@ -49,6 +53,7 @@ else
     apt install openssh-server
 fi
 
+# Vérifie que mcrypt est installé
 if [ "$mcrypt_status" = "Status: install ok installed" ]
 then
 	echo "[✓] mcrypt"
@@ -68,7 +73,7 @@ then
 	ip=$(ifconfig | grep "inet.*broadcast" | cut -d" " -f10)
 	echo "IP du serveur: $ip"
 	echo
-	
+
 	bash ./user_creation.sh player
     bash ./user_creation.sh create
 elif [ "$1" = "stop" ]
