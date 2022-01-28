@@ -1,0 +1,4 @@
+Au début de la partie, chaque joueur a 7 cartes.
+A chaque tour, chaque joueur choisit une carte à jouer.
+Le joueur qui a mit la carte la plus forte remporte les autres cartes et les place dans sa main.
+La partie se termine lorsqu'il ne reste plus qu'un joueur en jeu.
